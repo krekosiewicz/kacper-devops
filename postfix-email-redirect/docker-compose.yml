@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  postfix:
+    build: .
+    container_name: postfix
+    env_file:
+      - .envKR
+    environment:
+      MAILNAME: ${MAILNAME}
+      SMTP_USER: ${SMTP_USER}
+      EMAIL_FROM: ${EMAIL_FROM}
+      EMAIL_TO: ${EMAIL_TO}
+    networks:
+      - email-network
+    ports:
+      - "25:25"
+      - "587:587"
+
+networks:
+  email-network:
+    external: true
