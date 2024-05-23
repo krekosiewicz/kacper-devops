@@ -4,8 +4,6 @@ services:
   postfix:
     build: .
     container_name: postfix
-    env_file:
-      - .envKR
     environment:
       MAILNAME: ${MAILNAME}
       SMTP_USER: ${SMTP_USER}

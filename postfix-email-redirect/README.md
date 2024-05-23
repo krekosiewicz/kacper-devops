@@ -17,5 +17,7 @@ Here is how the DNS configuration might look in your DNS provider’s interface:
 
 # How to run
 ```shell
-docker-compose up -d
+docker network create email-network
+docker-compose --env-file <.yourEnvFile> up -d
+
 ```
