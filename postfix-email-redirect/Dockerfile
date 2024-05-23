@@ -1,7 +1,15 @@
 FROM boky/postfix
 
-# Install rsyslog
-RUN apt-get update && apt-get install -y rsyslog
+# Use build arguments to pass environment variables
+ARG MAILNAME
+ARG SMTP_USER
+ARG EMAIL_FROM
+ARG EMAIL_TO
+
+ENV MAILNAME=${MAILNAME}
+ENV SMTP_USER=${SMTP_USER}
+ENV EMAIL_FROM=${EMAIL_FROM}
+ENV EMAIL_TO=${EMAIL_TO}
 
 # Copy setup script
 COPY setup.sh /config/setup.sh
@@ -9,9 +17,5 @@ COPY setup.sh /config/setup.sh
 # Make setup script executable
 RUN chmod +x /config/setup.sh
 
-
-# Run setup script
-RUN /config/setup.sh
-
-# Start rsyslog and Postfix in the foreground
-CMD postfix start-fg
+# Run setup script at container startup
+CMD ["/config/setup.sh"]

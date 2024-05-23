@@ -2,15 +2,17 @@ version: '3.7'
 
 services:
   postfix:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - MAILNAME=${MAILNAME}
+        - SMTP_USER=${SMTP_USER}
+        - EMAIL_FROM=${EMAIL_FROM}
+        - EMAIL_TO=${EMAIL_TO}
     container_name: postfix
     env_file:
-      - .envKR
-    environment:
-      MAILNAME: ${MAILNAME}
-      SMTP_USER: ${SMTP_USER}
-      EMAIL_FROM: ${EMAIL_FROM}
-      EMAIL_TO: ${EMAIL_TO}
+      - .env
     networks:
       - email-network
     ports:
