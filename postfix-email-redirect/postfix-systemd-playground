@@ -1,0 +1,37 @@
+# HERE DESCRIPTION
+# This systemd service file defines how the Postfix Mail Transport Agent is managed on your system.
+# It controls when and how Postfix starts, stops, and restarts, ensuring it only runs when the network is available.
+# It can be customized to specify restart behavior, security features (like using a private /tmp directory), 
+# and timeout settings to ensure Postfix behaves as desired under systemd.
+
+# instructiON
+# 1. To configure this file, place it in /etc/systemd/system/ as 'postfix.service' or adjust an existing file there.
+# 2. After editing, run 'sudo systemctl daemon-reload' to apply changes.
+# 3. Enable the service to start on boot: 'sudo systemctl enable postfix'.
+# 4. Start or stop the service as needed: 'sudo systemctl start postfix' or 'sudo systemctl stop postfix'.
+# 5. To monitor the service's status: 'sudo systemctl status postfix'.
+# 6. Optional: Uncomment 'Restart=always' and 'RestartSec=60' to enable automatic restarts on failure.
+
+
+# [Unit] section: Describes what this service does and its dependencies.
+[Unit]
+Description=Postfix Mail Transport Agent
+After=network.target
+Wants=network-online.target
+
+# [Service] section: Defines how the service is run and managed.
+[Service]
+Type=forking
+PIDFile=/var/spool/postfix/pid/master.pid
+ExecStart=/usr/sbin/postfix start
+ExecStop=/usr/sbin/postfix stop
+ExecReload=/usr/sbin/postfix reload
+#Restart=always
+#RestartSec=60
+TimeoutSec=300
+PrivateTmp=true
+
+
+# [Install] section: Defines when this service should be started or stopped.
+[Install]
+WantedBy=multi-user.target
