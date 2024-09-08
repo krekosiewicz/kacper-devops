@@ -172,6 +172,14 @@ You can check the status to ensure Postfix is running correctly:
 sudo systemctl status postfix
 ```
 
+
+This will run your postfix instance on every system boot
+
+```bash
+sudo systemctl enable postfix
+```
+
+
 * * * * *
 
 Step 6: Test the Configuration
