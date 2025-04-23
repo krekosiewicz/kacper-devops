@@ -1,0 +1,9 @@
+services:
+  reverse-proxy:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - ./sites:/etc/nginx/sites-available
+    environment:
+      - DOMAINS=high-maintenance.pl.local mlodzi-maja-glos.com.pl.local
