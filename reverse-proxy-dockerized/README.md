@@ -11,6 +11,7 @@ This repository contains a production-ready **NGINX + Certbot** reverse proxy se
 - ✅ Per-domain config via `sites/*.conf`
 - ✅ Auto-renewal compatible (via cron or manual)
 - ✅ Easily extensible: drop new `.conf` + issue cert
+- ✅ Shared Docker network support (`reverse-proxy-net`)
 
 ---
 
@@ -42,8 +43,24 @@ Point your domain(s) to your VPS IP address (e.g., `example.com` and `www.exampl
 
 ---
 
-### 2. Start the Proxy
+### 1.5. Add reverse proxy container to a shared network
 
+Make sure both your reverse proxy and apps share a Docker network named `reverse-proxy-net`.
+
+#### Create it (if not created yet):
+```bash
+docker network create reverse-proxy-net
+```
+
+Ensure app container is connected to `reverse-proxy-net`:
+
+```bash
+docker network connect reverse-proxy-net your_app_container
+```
+
+----
+
+### 2. Start the Proxy
 ```bash
 docker compose up -d --build
 ```
