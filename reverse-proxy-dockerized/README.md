@@ -81,6 +81,8 @@ Certificates will be saved to:
 
 #### Example:
 
+> simplified, in sites/example.com.conf you'll find advanced version.
+
 ```nginx
 server {
     listen 80;
@@ -111,6 +113,9 @@ server {
     }
 }
 ```
+
+> All configs in `sites-available/` are auto-symlinked to `sites-enabled/` on startup. Delete the `.conf` file or remove the symlink to disable a domain.
+
 
 4. Reload NGINX:
 
