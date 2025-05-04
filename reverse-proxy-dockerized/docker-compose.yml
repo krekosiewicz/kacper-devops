@@ -1,9 +1,19 @@
 services:
   reverse-proxy:
     build: .
+    container_name: reverse-proxy
+    restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./sites:/etc/nginx/sites-available
-    environment:
-      - DOMAINS=high-maintenance.pl.local mlodzi-maja-glos.com.pl.local
+      - ./data/certbot/www:/var/www/certbot
+      - ./data/certbot/conf:/etc/letsencrypt
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./data/certbot/www:/var/www/certbot
+      - ./data/certbot/conf:/etc/letsencrypt
