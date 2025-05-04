@@ -114,12 +114,17 @@ server {
 }
 ```
 
-> All configs in `sites-available/` are auto-symlinked to `sites-enabled/` on startup. Delete the `.conf` file or remove the symlink to disable a domain.
+All configs in `sites-available/` are auto-symlinked to `sites-enabled/` on startup. Delete the `.conf` file or remove the symlink to disable a domain.
+```bash
+(optional, entrypoint.sh should handle it)
+ln -s /etc/nginx/sites-available/example.com.conf /etc/nginx/sites-enabled/example.com.conf
 
+```
 
 4. Reload NGINX:
 
 ```bash
+
 docker compose exec reverse-proxy nginx -s reload
 ```
 
